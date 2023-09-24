@@ -49,7 +49,6 @@ def feature_engineering(data: pd.DataFrame, prediction_interval: int = 1) -> pd.
     data['Lagged_Return_2'] = data['label'].shift(2)
     data['Lagged_Return_3'] = data['label'].shift(3)
     data['Lagged_Return_4'] = data['label'].shift(4)
-    # new add
     data['Lagged_Return_5'] = data['label'].shift(5)
     data['Lagged_Return_7'] = data['label'].shift(7)
     data['Lagged_Return_9'] = data['label'].shift(9)
@@ -71,7 +70,7 @@ def feature_engineering(data: pd.DataFrame, prediction_interval: int = 1) -> pd.
 
     data['Stochastic_Oscillator_14'] = calculate_stochastic(data, window=14)
 
-    # Ichimoku Cloud (you can adjust the periods as needed)
+    # Ichimoku Cloud (We can adjust the periods as needed)
     data['Tenkan_Sen'] = (data['high'].rolling(window=9).max() + data['low'].rolling(window=9).min()) / 2
     data['Kijun_Sen'] = (data['high'].rolling(window=26).max() + data['low'].rolling(window=26).min()) / 2
     data['Senkou_Span_A'] = ((data['Tenkan_Sen'] + data['Kijun_Sen']) / 2).shift(26)

@@ -63,3 +63,65 @@ def single_crypto_backtest(data, initial_balance = 1000000, rebalance_interval_m
     portfolio_df = pd.DataFrame(portfolio_info)
     
     return final_value, portfolio_df
+
+def backtestCalculator(cash:float, backtest_df:pd.DataFrame, weights:dict) -> tuple:
+
+    """
+
+    Given cash value, backtest_df and weights it calculates the value invested, current value, balance left and shares.
+
+ 
+
+    parameters
+
+        cash: Cash value before trading
+
+        backtest_df: Contains price information of t and t+1 th days
+
+        weights: weight to assign to each asset
+
+    returns
+
+        cash_invested, current_value_of_investment, shares
+
+    """
+
+    amount_allocation = {}
+
+    shares, total, balance, total_invested = {}, 0, 0, 0
+
+    prices = backtest_df.iloc[0].to_dict()
+
+    new_prices = backtest_df.iloc[len(backtest_df)-1].to_dict()
+
+ 
+
+    for keys in backtest_df.columns:
+
+        amount_allocation[keys] = weights[keys] * cash
+
+ 
+
+    for keys in backtest_df.columns:
+
+        shares[keys] = (amount_allocation[keys] // prices[keys])
+
+ 
+
+    for keys in backtest_df.columns:
+
+        total_invested = total_invested + (shares[keys] * prices[keys])
+
+ 
+
+    balance = cash - total_invested
+
+ 
+
+    for keys in backtest_df.columns:
+
+        total = total + (shares[keys] * new_prices[keys])
+
+ 
+
+    return total_invested, total, balance, shares[keys]

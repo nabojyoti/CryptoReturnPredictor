@@ -51,7 +51,7 @@ def candle_stick_chart(data:pd.DataFrame) -> go.Figure:
     # Create and add the volume trace to the second subplot (you can customize this as needed)
     volume_trace = go.Bar(
         x=data.index.to_list(),
-        y=data['close'],  # Use 'Close' for volume for this example
+        y=data['volume'],  # Use 'Close' for volume for this example
         name='volume',
         marker_color='black'
     )
@@ -65,7 +65,7 @@ def candle_stick_chart(data:pd.DataFrame) -> go.Figure:
         title='Candlestick Chart of ETHUSDT',
         xaxis_title='Timestamp',
         yaxis_title='Price (USD)',
-        xaxis_rangeslider_visible=True,
+        xaxis_rangeslider_visible=False,
         xaxis=dict(
         showgrid=False,  # Remove x-axis grid lines
         showline=False,  # Remove x-axis line
